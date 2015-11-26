@@ -55,7 +55,7 @@ def _send_email(prog, args, body):
 
     """
     process = subprocess.Popen([prog] + args, stdin=subprocess.PIPE)
-    process.communicate(body.encode())
+    process.communicate(body.encode(errors = 'surrogateescape'))
     process.wait()
     if process.returncode != 0:
         raise SendError
@@ -88,7 +88,7 @@ def queue_message(args, body):
 
     """
     hasher = hashlib.sha1()
-    hasher.update(body.encode())
+    hasher.update(body.encode(errors = 'surrogateescape'))
     name = hasher.hexdigest()
     with open(_get_message(name), 'x') as file:
         Message(args, body).dump(file)
@@ -166,7 +166,7 @@ def _cmd_list():
         with open(_get_message(name)) as file:
             message = Message.load(file)
         print(message.args)
-        print(message.body)
+        print(message.body.encode('utf-8', errors = 'surrogateescape'))
 
 
 @_add_command('d')
