@@ -6,8 +6,8 @@ SCRIPT_PATH=$(realpath $(SCRIPT))
 
 all:
 	@echo "Usage:"
-	@echo "make install - Install script in ~/bin"
-	@echo "make develop - Install symlink to script in ~/bin"
+	@echo "make install - Install script in ~/.local/bin"
+	@echo "make develop - Install symlink to script in ~/.local/bin"
 
 install:
 	cp $(SCRIPT) $(INSTALL_DIR)
